@@ -71,6 +71,11 @@ class User implements UserInterface
      */
     private $diabetes_type;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $doctor_email;
+
     public function __construct()
     {
         $this->bloodsugars = new ArrayCollection();
@@ -253,6 +258,18 @@ class User implements UserInterface
     public function setDiabetesType(string $diabetes_type): self
     {
         $this->diabetes_type = $diabetes_type;
+
+        return $this;
+    }
+
+    public function getDoctorEmail(): ?string
+    {
+        return $this->doctor_email;
+    }
+
+    public function setDoctorEmail(?string $doctor_email): self
+    {
+        $this->doctor_email = $doctor_email;
 
         return $this;
     }
