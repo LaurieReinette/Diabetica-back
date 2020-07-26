@@ -14,8 +14,7 @@ class BloodsugarType extends AbstractType
         $builder
             ->add('rate')
             ->add('date')
-            ->add('score')
-            ->add('user')
+            
         ;
     }
 

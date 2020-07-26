@@ -23,10 +23,11 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-
         // $user = $this->getUser();
 
-        return $this->render('user/followup.html.twig', ["user" => $user]);
+        return $this->render('user/followup.html.twig', [
+            "user" => $user]
+        );
     }
 
     /**
@@ -40,21 +41,24 @@ class UserController extends AbstractController
 
         $form = $this->createForm(BloodsugarType::class, $bloodsugar);
 
+        $form->handleRequest($request);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $currentRate = $bloodsugar->getRate();
 
             $bloodsugar->setUser($user);
-
-            if ($currentRate > $user->getTageMin() && $currentRate < $user->getTargetMax()){
+            $bloodsugar->setDatetime(new \DateTime());
+            if ($currentRate > $user->getTargetMin() && $currentRate < $user->getTargetMax()){
 
                 $bloodsugar->setScore(1);
             }
-            if ($currentRate < $user->getTagetMin()){
+            if ($currentRate < $user->getTargetMin()){
 
                 $bloodsugar->setScore(0);
 
             }
-            if ($currentRate > $user->getTagetMax()){
+            if ($currentRate > $user->getTargetMax()){
                 
                 $bloodsugar->setScore(2);
             }
