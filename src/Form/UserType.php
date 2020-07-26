@@ -13,7 +13,6 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
             ->add('password')
             ->add('lastname')
             ->add('firstname')
@@ -21,6 +20,7 @@ class UserType extends AbstractType
             ->add('target_max')
             ->add('doctor_name')
             ->add('diabetes_type')
+            ->add('doctor_email')
         ;
     }
 

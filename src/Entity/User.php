@@ -214,12 +214,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function gettargetMin(): ?float
+    public function getTargetMin(): ?float
     {
         return $this->target_min;
     }
 
-    public function settargetMin(float $target_min): self
+    public function setTargetMin(float $target_min): self
     {
         $this->target_min = $target_min;
 
