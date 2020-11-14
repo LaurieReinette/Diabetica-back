@@ -7,9 +7,17 @@ use App\Form\UserType;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
@@ -44,7 +52,23 @@ class DefaultController extends AbstractController
 
         return $this->render('default/signup.html.twig', [
             "formView" => $form->createView()
-        ]);    }
+        ]);    
+    }
     
-    
+    /**
+     * @Route("/testapi", name="test_api", methods="GET")
+     */
+    public function test()
+    {
+        $testUser = 
+        [
+            "id" => 2,
+            "name" => "Michu",
+            "age" => 56,
+            "bloodsugertype" => 1,
+        ];
+        return $this->json($testUser, $status = 200, $testUser, $context = []);
+    }
+
+   
 }
