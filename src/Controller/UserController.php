@@ -21,9 +21,8 @@ class UserController extends AbstractController
      */
     public function followup(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
+        // récupération de l'utilisateur en cours
         $user = $this->getUser();
-
-        // $user = $this->getUser();
 
         return $this->render('user/followup.html.twig', [
             "user" => $user]
@@ -36,6 +35,8 @@ class UserController extends AbstractController
     public function bloodsugarAdd(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
+
+        // création d'un objet Bloodsugar
 
         $bloodsugar = new Bloodsugar;
 
