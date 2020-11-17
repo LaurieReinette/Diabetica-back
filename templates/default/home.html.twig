@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Accueil - Diabie {% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-10 col-xl-10 mb-2 center ">
+            <div class="card">
+                <div class="card-body">
+                    <h2>
+                        C'est simple, rapide et gratuit</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Je crée un compte</li>
+                            <li class="list-group-item">Je renseigne ma glycmié cible (définie par mon médecin)</li>
+                            <li class="list-group-item">J'entre mes glycémies quotidiennement</li>
+                            <li class="list-group-item">Je suis alertée si le taux est trop haut ou trop bas</li>
+                            <li class="list-group-item">Je conserve tout l'histotique de mes glycémies</li>
+                            <li class="list-group-item">Bonus: je peux les envoyer par mail à mon medecin</li>
+                          </ul>
+                    
+                    <a href="{{ path('signup') }}" class="text-align-center">
+                        <h3>Inscription</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
