@@ -7,86 +7,101 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
+// , \Serializable
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("api")
+     * @Groups({"apiv0"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("api")
+     * @Groups({"apiv0"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Bloodsugar::class, mappedBy="user")
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $bloodsugars;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="float")
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $target_min;
 
     /**
      * @ORM\Column(type="float")
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $target_max;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $doctor_name;
 
     /**
      * @ORM\Column(type="string", length=20)
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $diabetes_type;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * Groups("api")
+     * @Groups({"apiv0"})
      */
     private $doctor_email;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"apiv0"})
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"apiv0"})
+     */
+    private $username;
 
     public function __construct()
     {
@@ -170,6 +185,48 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    // /** @see \Serializable::serialize() */
+    // public function serialize()
+    // {
+    //     return serialize(array(
+    //         $this->id,
+    //         $this->username,
+    //         $this->password,
+    //         $this->email,
+    //         $this->roles,
+    //         $this->bloodsugars,
+    //         $this->lastname,
+    //         $this->firstname,
+    //         $this->target_min,
+    //         $this->target_max,
+    //         $this->doctor_name,
+    //         $this->diabetes_type,
+    //         $this->doctor_email,
+    //         $this->created_at,
+    //     ));
+    // }
+    
+    // /** @see \Serializable::unserialize() */
+    // public function unserialize($serialized)
+    // {
+    //     list (
+    //         $this->id,
+    //         $this->username,
+    //         $this->password,
+    //         $this->email,
+    //         $this->roles,
+    //         $this->bloodsugars,
+    //         $this->lastname,
+    //         $this->firstname,
+    //         $this->target_min,
+    //         $this->target_max,
+    //         $this->doctor_name,
+    //         $this->diabetes_type,
+    //         $this->doctor_email,
+    //         $this->created_at,
+    //     ) = unserialize($serialized);
+    // }
 
     /**
      * @return Collection|Bloodsugar[]
@@ -282,6 +339,25 @@ class User implements UserInterface
     public function setDoctorEmail(?string $doctor_email): self
     {
         $this->doctor_email = $doctor_email;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
