@@ -14,25 +14,25 @@ class Bloodsugar
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $score;
 
@@ -43,7 +43,7 @@ class Bloodsugar
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $datetime;
 

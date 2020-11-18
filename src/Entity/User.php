@@ -20,86 +20,86 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Bloodsugar::class, mappedBy="user")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $bloodsugars;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $target_min;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $target_max;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $doctor_name;
 
     /**
      * @ORM\Column(type="string", length=20)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $diabetes_type;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $doctor_email;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("apiv0")
+     * @Groups({"apiv0"})
      */
     private $username;
 
