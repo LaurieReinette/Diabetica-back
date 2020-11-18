@@ -86,12 +86,9 @@ class ApiController extends AbstractController
 
                     $userCreated =  $repository->find($user->getId());
                     
-                    dump($user);
-                    dump($userCreated);
                 
                     $response = $this->json($userCreated, 200, [], ['groups' => 'apiv0']);
 
-                    dd($response);
                        return $this->json($userCreated, 200, [], ['groups' => 'apiv0']);
                 } else {
                     // sinon on précise l'rreur
