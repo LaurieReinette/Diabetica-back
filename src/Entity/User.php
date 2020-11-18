@@ -17,62 +17,74 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("api")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("api")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * Groups("api")
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * Groups("api")
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity=Bloodsugar::class, mappedBy="user")
+     * Groups("api")
      */
     private $bloodsugars;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * Groups("api")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * Groups("api")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="float")
+     * Groups("api")
      */
     private $target_min;
 
     /**
      * @ORM\Column(type="float")
+     * Groups("api")
      */
     private $target_max;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * Groups("api")
      */
     private $doctor_name;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * Groups("api")
      */
     private $diabetes_type;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * Groups("api")
      */
     private $doctor_email;
 

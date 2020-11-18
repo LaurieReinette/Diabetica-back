@@ -14,21 +14,25 @@ class Bloodsugar
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * Groups("api")
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * Groups("api")
      */
     private $rate;
 
     /**
      * @ORM\Column(type="date")
+     * Groups("api")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="float")
+     * Groups("api")
      */
     private $score;
 

@@ -24,7 +24,8 @@ class ApiController extends AbstractController
                 "id" => 1
             ],
             [
-                "route" => "mon-compte",
+                "route" => "mo+
+                n-compte",
                 "label" => "Mon Compte",
                 "id" => 2
             ],
