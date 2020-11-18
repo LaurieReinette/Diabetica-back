@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BloodsugarRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=BloodsugarRepository::class)
  */
@@ -14,25 +14,25 @@ class Bloodsugar
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * Groups("api")
+     * @Groups("apiv0")
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * Groups("api")
+     * @Groups("apiv0")
      */
     private $rate;
 
     /**
      * @ORM\Column(type="date")
-     * Groups("api")
+     * @Groups("apiv0")
      */
     private $date;
 
     /**
      * @ORM\Column(type="float")
-     * Groups("api")
+     * @Groups("apiv0")
      */
     private $score;
 
@@ -43,6 +43,7 @@ class Bloodsugar
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("apiv0")
      */
     private $datetime;
 
@@ -75,12 +76,12 @@ class Bloodsugar
         return $this;
     }
 
-    public function getScore(): ?int
+    public function getScore(): ?float
     {
         return $this->score;
     }
 
-    public function setScore(int $score): self
+    public function setScore(float $score): self
     {
         $this->score = $score;
 
