@@ -64,6 +64,7 @@ security:
      #   - { path: ^/profile, roles: ROLE_USER }
         # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
     access_control:
+            - { path: ^/api/login/check-email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
             - { path: ^/admin, roles: ROLE_ADMIN }

@@ -34,6 +34,34 @@ class ApiController extends AbstractController
         // be complete yet. Instead, store the entire Security object.
         $this->security = $security;
     }
+    /**
+     * @Route("/login/check-email", name="check_mail", methods="POST")
+     */
+    public function checkEmail(Request $request, UserRepository $repository)
+    {
+        // on récupère le contenu du json envoyé par le front
+        $jsonReceived = $request->getContent();
+
+        $json = json_decode($jsonReceived);
+
+        // on vérifie que le mail reçu est bien valide
+        if (filter_var($json->email, FILTER_VALIDATE_EMAIL)) {
+            // on va voir grace à la méthode checkEmailUnique si le mail est connu en bdd
+            if ($repository->checkEmailUnique($json->email) == null) {
+                // si le mail est connu on renvoie une 403
+                $data = [ "known" => false];
+                    return $this->json($data, 200, [], []);
+                }
+                $data = [ "known" => true];
+                // si il est connu on renvoie une 200 afin d'afficher le reste du formulaire
+                return $this->json($data, 200, [], []);
+        }
+        //si l'email est invalide on renvoie une 403 au front en leur expliquant
+
+        $error = ["error" => "L'email entré par l'utilisateur n'est pas un email valide"];
+        return $this->json($error, 403, $error, []);
+    }
+
 
     /**
      * @Route("/login/signup", name="user_add", methods="POST")
@@ -86,9 +114,6 @@ class ApiController extends AbstractController
 
                     $userCreated =  $repository->find($user->getId());
                     
-                
-                    $response = $this->json($userCreated, 200, [], ['groups' => 'apiv0']);
-
                        return $this->json($userCreated, 200, [], ['groups' => 'apiv0']);
                 } else {
                     // sinon on précise l'rreur
@@ -107,32 +132,19 @@ class ApiController extends AbstractController
         return $this->json($error, 403, $error, []);
     }
 
-     /**
-     * @Route("/navpages", name="navpages", methods="GET")
+    /**
+     * @Route("/user", name="user_detail", methods="GET")
      */
-    public function navpages()
+    public function userView( )
     {
-        $pages = 
-        [
-            [
-                "route" => "",
-                "label" => "Accueil",
-                "id" => 1
-            ],
-            [
-                "route" => "mon-compte",
-                "label" => "Mon Compte",
-                "id" => 2
-            ],
-            [
-                "route" => "a-propos",
-                "label" => "A propos",
-                "id" => 3
-            ]
-            
-        ];
-        return $this->json($pages, $status = 200, [], $context = []);
-    }
+        $user = $this->getUser();
 
+        if ($user == null) {
+            $error = ["error" => "Utilisateur inconnu en base de données"];
+            return $this->json($error, $status = 404, $error, $context = []);
+        }
+
+        return $this->json($user, 200, [], ['groups' => 'apiv0']);
+    }
 
 }
