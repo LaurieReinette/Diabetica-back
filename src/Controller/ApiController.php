@@ -152,6 +152,8 @@ class ApiController extends AbstractController
      */
     public function userProductManualAdd( Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserRepository $userRepository, BloodsugarRepository $bloodsugarRepository)
     {
+        // on configure le local pour stocker plus tar les dates en français en string
+        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
         // on récupèr ele user connecté
         $user = $this->getUser();
 
@@ -164,18 +166,13 @@ class ApiController extends AbstractController
         $jsonReceived = $request->getContent();
         $json = json_decode($jsonReceived);
 
-
-        // $date = new DateTime('2000-01-01');
-        // echo $date->format('Y-m-d H:i:s');
-
-        // on crée une nouvelle instance du produit reçu afin d'avoir un objet produit
         $newBloodsugar = $serializer->deserialize($jsonReceived, BloodSugar::class, 'json');
 
         // on assigne à l'utilisateur
         $newBloodsugar->setUser($user);
         //on formate la date recu au format "Lundi 2 novembre 2020"
-        // dd(date_format(date_create($json->date), 'l j F Y'));
-        $newBloodsugar->setDate(date_format(date_create($json->date), 'l j F Y'));
+
+        $newBloodsugar->setDate(strftime('%A %d %B %Y', strtotime($json->date)));
         
         $em->persist($newBloodsugar);
 
