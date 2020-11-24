@@ -25,27 +25,33 @@ class Bloodsugar
     private $rate;
 
     /**
-     * @ORM\Column(type="date")
-     * @Groups({"apiv0"})
-     */
-    private $date;
-
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"apiv0"})
-     */
-    private $score;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bloodsugars")
      */
     private $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"apiv0"})
      */
-    private $datetime;
+    private $correction;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $corrected;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     * @Groups({"apiv0"})
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     * @Groups({"apiv0"})
+     */
+    private $time;
 
     public function getId(): ?int
     {
@@ -64,30 +70,6 @@ class Bloodsugar
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getScore(): ?float
-    {
-        return $this->score;
-    }
-
-    public function setScore(float $score): self
-    {
-        $this->score = $score;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -100,14 +82,50 @@ class Bloodsugar
         return $this;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getCorrection(): ?string
     {
-        return $this->datetime;
+        return $this->correction;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setCorrection(?string $correction): self
     {
-        $this->datetime = $datetime;
+        $this->correction = $correction;
+
+        return $this;
+    }
+
+    public function getCorrected(): ?bool
+    {
+        return $this->corrected;
+    }
+
+    public function setCorrected(bool $corrected): self
+    {
+        $this->corrected = $corrected;
+
+        return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTime(): ?string
+    {
+        return $this->time;
+    }
+
+    public function setTime(string $time): self
+    {
+        $this->time = $time;
 
         return $this;
     }

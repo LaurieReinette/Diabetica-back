@@ -143,6 +143,43 @@ class ApiController extends AbstractController
             $error = ["error" => "Utilisateur inconnu en base de données"];
             return $this->json($error, $status = 404, $error, $context = []);
         }
+ 
+        return $this->json($user, 200, [], ['groups' => 'apiv0']);
+    }
+
+     /**
+     * @Route("/user/bloodsugar/add", name="bloodsugar_add_", methods="POST")
+     */
+    public function userProductManualAdd( Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserRepository $userRepository, BloodsugarRepository $bloodsugarRepository)
+    {
+        // on récupèr ele user connecté
+        $user = $this->getUser();
+
+        // si il n'y en a pas on renvoie l'information au front
+        if ($user == null) {
+            $error = ["error" => "Utilisateur inconnu en base de données"];
+            return $this->json($error, $status = 404, $error, $context = []);
+        }
+        // on récupère le json reçu de la requête
+        $jsonReceived = $request->getContent();
+        $json = json_decode($jsonReceived);
+
+
+        // $date = new DateTime('2000-01-01');
+        // echo $date->format('Y-m-d H:i:s');
+
+        // on crée une nouvelle instance du produit reçu afin d'avoir un objet produit
+        $newBloodsugar = $serializer->deserialize($jsonReceived, BloodSugar::class, 'json');
+
+        // on assigne à l'utilisateur
+        $newBloodsugar->setUser($user);
+        //on formate la date recu au format "Lundi 2 novembre 2020"
+        // dd(date_format(date_create($json->date), 'l j F Y'));
+        $newBloodsugar->setDate(date_format(date_create($json->date), 'l j F Y'));
+        
+        $em->persist($newBloodsugar);
+
+        $em->flush();
 
         return $this->json($user, 200, [], ['groups' => 'apiv0']);
     }

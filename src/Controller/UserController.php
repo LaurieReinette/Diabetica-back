@@ -29,51 +29,51 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/user/ajouter-une-glycemie", name="bloodsugarAdd")
-     */
-    public function bloodsugarAdd(Request $request, EntityManagerInterface $em)
-    {
-        $user = $this->getUser();
+    // /**
+    //  * @Route("/user/ajouter-une-glycemie", name="bloodsugarAdd")
+    //  */
+    // public function bloodsugarAdd(Request $request, EntityManagerInterface $em)
+    // {
+    //     $user = $this->getUser();
 
-        // création d'un objet Bloodsugar
+    //     // création d'un objet Bloodsugar
 
-        $bloodsugar = new Bloodsugar;
+    //     $bloodsugar = new Bloodsugar;
 
-        $form = $this->createForm(BloodsugarType::class, $bloodsugar);
+    //     $form = $this->createForm(BloodsugarType::class, $bloodsugar);
 
-        $form->handleRequest($request);
+    //     $form->handleRequest($request);
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentRate = $bloodsugar->getRate();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $currentRate = $bloodsugar->getRate();
 
-            $bloodsugar->setUser($user);
-            $bloodsugar->setDatetime(new \DateTime());
-            if ($currentRate > $user->getTargetMin() && $currentRate < $user->getTargetMax()){
+    //         $bloodsugar->setUser($user);
+    //         $bloodsugar->setDatetime(new \DateTime());
+    //         if ($currentRate > $user->getTargetMin() && $currentRate < $user->getTargetMax()){
 
-                $bloodsugar->setScore(1);
-            }
-            if ($currentRate < $user->getTargetMin()){
+    //             $bloodsugar->setScore(1);
+    //         }
+    //         if ($currentRate < $user->getTargetMin()){
 
-                $bloodsugar->setScore(0);
+    //             $bloodsugar->setScore(0);
 
-            }
-            if ($currentRate > $user->getTargetMax()){
+    //         }
+    //         if ($currentRate > $user->getTargetMax()){
                 
-                $bloodsugar->setScore(2);
-            }
+    //             $bloodsugar->setScore(2);
+    //         }
 
-            $em->persist($bloodsugar);
+    //         $em->persist($bloodsugar);
 
-            $em->flush();
+    //         $em->flush();
 
-            return $this->redirectToRoute('followup', ['user' => $user]);
-        }
+    //         return $this->redirectToRoute('followup', ['user' => $user]);
+    //     }
 
-        // $user = $this->getUser();
-        return $this->render('user/bloodsugarAdd.html.twig', [
-            "formView" => $form->createView()
-        ]);
-    }
+    //     // $user = $this->getUser();
+    //     return $this->render('user/bloodsugarAdd.html.twig', [
+    //         "formView" => $form->createView()
+    //     ]);
+    // }
 }

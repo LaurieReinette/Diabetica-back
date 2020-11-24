@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
-// , \Serializable
+
 {
     /**
      * @ORM\Id()
@@ -32,7 +32,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"apiv0"})
      */
     private $roles = [];
 
