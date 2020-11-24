@@ -39,7 +39,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"apiv0"})
      */
     private $password;
 
@@ -186,47 +185,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    // /** @see \Serializable::serialize() */
-    // public function serialize()
-    // {
-    //     return serialize(array(
-    //         $this->id,
-    //         $this->username,
-    //         $this->password,
-    //         $this->email,
-    //         $this->roles,
-    //         $this->bloodsugars,
-    //         $this->lastname,
-    //         $this->firstname,
-    //         $this->target_min,
-    //         $this->target_max,
-    //         $this->doctor_name,
-    //         $this->diabetes_type,
-    //         $this->doctor_email,
-    //         $this->created_at,
-    //     ));
-    // }
-    
-    // /** @see \Serializable::unserialize() */
-    // public function unserialize($serialized)
-    // {
-    //     list (
-    //         $this->id,
-    //         $this->username,
-    //         $this->password,
-    //         $this->email,
-    //         $this->roles,
-    //         $this->bloodsugars,
-    //         $this->lastname,
-    //         $this->firstname,
-    //         $this->target_min,
-    //         $this->target_max,
-    //         $this->doctor_name,
-    //         $this->diabetes_type,
-    //         $this->doctor_email,
-    //         $this->created_at,
-    //     ) = unserialize($serialized);
-    // }
 
     /**
      * @return Collection|Bloodsugar[]
