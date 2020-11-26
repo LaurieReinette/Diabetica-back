@@ -48,7 +48,7 @@ class ApiController extends AbstractController
         if (filter_var($json->email, FILTER_VALIDATE_EMAIL)) {
             // on va voir grace à la méthode checkEmailUnique si le mail est connu en bdd
             if ($repository->checkEmailUnique($json->email) == null) {
-                // si le mail est connu on renvoie une 403
+                // si le mail est connu on renvoie 
                 $data = [ "known" => false];
                     return $this->json($data, 200, [], []);
                 }
