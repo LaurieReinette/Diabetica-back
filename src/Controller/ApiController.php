@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 
 
+
 /**
  * @Route("/api")
  */
@@ -148,7 +149,7 @@ class ApiController extends AbstractController
     }
 
      /**
-     * @Route("/user/bloodsugar/add", name="bloodsugar_add_", methods="POST")
+     * @Route("/user/bloodsugar/add", name="bloodsugar_add", methods="POST")
      */
     public function userProductManualAdd( Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserRepository $userRepository, BloodsugarRepository $bloodsugarRepository)
     {
@@ -173,6 +174,16 @@ class ApiController extends AbstractController
         //on formate la date recu au format "Lundi 2 novembre 2020"
 
         $newBloodsugar->setDate(strftime('%A %d %B %Y', strtotime($json->date)));
+
+        if ($json->rate < $user->getTargetMin()){
+            $newBloodsugar->setNormality("Hypoglycémie");
+        }
+        elseif (($json->rate >= $user->getTargetMin()) && ($json->rate <= $user->getTargetMax())) {
+            $newBloodsugar->setNormality("Dans la cible");
+        }
+        else {
+            $newBloodsugar->setNormality("Hyperglycémie");
+        }
         
         $em->persist($newBloodsugar);
 

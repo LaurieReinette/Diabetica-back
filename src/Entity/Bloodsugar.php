@@ -36,8 +36,7 @@ class Bloodsugar
     private $correction;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"apiv0"})
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $corrected;
 
@@ -52,6 +51,12 @@ class Bloodsugar
      * @Groups({"apiv0"})
      */
     private $time;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Groups({"apiv0"})
+     */
+    private $normality;
 
     public function getId(): ?int
     {
@@ -126,6 +131,18 @@ class Bloodsugar
     public function setTime(string $time): self
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    public function getNormality(): ?string
+    {
+        return $this->normality;
+    }
+
+    public function setNormality(string $normality): self
+    {
+        $this->normality = $normality;
 
         return $this;
     }
