@@ -102,7 +102,7 @@ class ApiController extends AbstractController
 
                     $user->setDoctorName($json->doctorName);
 
-                    $user->setDiabetesType($json->diabetesType);
+                    $user->setTreatment($json->treatment);
 
                     $user->setDoctorEmail($json->doctorEmail);
 

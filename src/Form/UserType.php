@@ -19,7 +19,6 @@ class UserType extends AbstractType
             ->add('target_min')
             ->add('target_max')
             ->add('doctor_name')
-            ->add('diabetes_type')
             ->add('doctor_email')
         ;
     }

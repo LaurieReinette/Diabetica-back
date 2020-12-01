@@ -78,12 +78,6 @@ class User implements UserInterface
     private $doctor_name;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"apiv0"})
-     */
-    private $diabetes_type;
-
-    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"apiv0"})
      */
@@ -99,6 +93,17 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     * @Groups({"apiv0"})
+     */
+    private $treatment;
+
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $diabetes_type;
 
     public function __construct()
     {
@@ -275,18 +280,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDiabetesType(): ?string
-    {
-        return $this->diabetes_type;
-    }
-
-    public function setDiabetesType(string $diabetes_type): self
-    {
-        $this->diabetes_type = $diabetes_type;
-
-        return $this;
-    }
-
     public function getDoctorEmail(): ?string
     {
         return $this->doctor_email;
@@ -314,6 +307,30 @@ class User implements UserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getTreatment(): ?string
+    {
+        return $this->treatment;
+    }
+
+    public function setTreatment(string $treatment): self
+    {
+        $this->treatment = $treatment;
+
+        return $this;
+    }
+
+    public function getDiabetesType(): ?string
+    {
+        return $this->diabetes_type;
+    }
+
+    public function setDiabetesType(?string $diabetes_type): self
+    {
+        $this->diabetes_type = $diabetes_type;
 
         return $this;
     }
