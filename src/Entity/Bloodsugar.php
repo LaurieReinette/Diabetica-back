@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BloodsugarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=BloodsugarRepository::class)
  */
@@ -21,6 +23,12 @@ class Bloodsugar
     /**
      * @ORM\Column(type="float")
      * @Groups({"apiv0"})
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *      min = 0.4,
+     *      max = 4,
+     *      notInRangeMessage = "Votre glycémie doit être entre 0.4 et 4 g/L",
+     * )
      */
     private $rate;
 
@@ -43,12 +51,16 @@ class Bloodsugar
     /**
      * @ORM\Column(type="string", length=30)
      * @Groups({"apiv0"})
+     * @Assert\LessThanOrEqual("today", message="La date de votre glycémie ne peut être dans le futur")
+     * 
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=30)
      * @Groups({"apiv0"})
+     * @Assert\Time
+     * @var string A "H:i" formatted value
      */
     private $time;
 
