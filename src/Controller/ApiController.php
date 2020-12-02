@@ -188,12 +188,23 @@ class ApiController extends AbstractController
 
         if ($json->rate < $user->getTargetMin()){
             $newBloodsugar->setNormality("Hypoglycémie");
+            $newBloodsugar->setLow(true);
+            $newBloodsugar->setHigh(false);
+            $newBloodsugar->setNormal(false);
+
         }
         elseif (($json->rate >= $user->getTargetMin()) && ($json->rate <= $user->getTargetMax())) {
             $newBloodsugar->setNormality("Dans la cible");
+            $newBloodsugar->setNormal(true);
+            $newBloodsugar->setHigh(false);
+            $newBloodsugar->setLow(false);
+            
         }
         else {
             $newBloodsugar->setNormality("Hyperglycémie");
+            $newBloodsugar->setHigh(true);
+            $newBloodsugar->setLow(false);
+            $newBloodsugar->setNormal(false);
         }
         
         $em->persist($newBloodsugar);

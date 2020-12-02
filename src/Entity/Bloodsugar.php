@@ -69,6 +69,24 @@ class Bloodsugar
      */
     private $time;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $high;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $low;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $normal;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +172,42 @@ class Bloodsugar
     public function setTime(\DateTimeInterface $time): self
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    public function getHigh(): ?bool
+    {
+        return $this->high;
+    }
+
+    public function setHigh(bool $high): self
+    {
+        $this->high = $high;
+
+        return $this;
+    }
+
+    public function getLow(): ?bool
+    {
+        return $this->low;
+    }
+
+    public function setLow(bool $low): self
+    {
+        $this->low = $low;
+
+        return $this;
+    }
+
+    public function getNormal(): ?bool
+    {
+        return $this->normal;
+    }
+
+    public function setNormal(bool $normal): self
+    {
+        $this->normal = $normal;
 
         return $this;
     }
