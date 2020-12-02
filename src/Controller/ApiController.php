@@ -169,6 +169,7 @@ class ApiController extends AbstractController
     {
         // on récupère le user connecté
         $user = $this->getUser();
+    
 
         // si il n'y en a pas on renvoie l'information au front
         if ($user == null) {
@@ -206,7 +207,10 @@ class ApiController extends AbstractController
             $newBloodsugar->setLow(false);
             $newBloodsugar->setNormal(false);
         }
-        
+        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
+        $newBloodsugar->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
+        $newBloodsugar->setTimeString(strftime('%Hh%M', strtotime($json->time)));
+        dd($newBloodsugar);
         $em->persist($newBloodsugar);
 
         $em->flush();
