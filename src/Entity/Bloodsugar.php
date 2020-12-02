@@ -87,6 +87,18 @@ class Bloodsugar
      */
     private $normal;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Groups({"apiv0"})
+     */
+    private $dateString;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     * @Groups({"apiv0"})
+     */
+    private $timeString;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -208,6 +220,30 @@ class Bloodsugar
     public function setNormal(bool $normal): self
     {
         $this->normal = $normal;
+
+        return $this;
+    }
+
+    public function getDateString(): ?string
+    {
+        return $this->dateString;
+    }
+
+    public function setDateString(string $dateString): self
+    {
+        $this->dateString = $dateString;
+
+        return $this;
+    }
+
+    public function getTimeString(): ?string
+    {
+        return $this->timeString;
+    }
+
+    public function setTimeString(string $timeString): self
+    {
+        $this->timeString = $timeString;
 
         return $this;
     }
