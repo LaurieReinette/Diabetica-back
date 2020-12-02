@@ -210,7 +210,7 @@ class ApiController extends AbstractController
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
         $newBloodsugar->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
         $newBloodsugar->setTimeString(strftime('%Hh%M', strtotime($json->time)));
-        dd($newBloodsugar);
+        
         $em->persist($newBloodsugar);
 
         $em->flush();
