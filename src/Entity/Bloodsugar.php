@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BloodsugarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=BloodsugarRepository::class)
  */
@@ -21,6 +23,12 @@ class Bloodsugar
     /**
      * @ORM\Column(type="float")
      * @Groups({"apiv0"})
+     * @Assert\NotBlank
+     * @Assert\Range(
+     *      min = 0.4,
+     *      max = 4,
+     *      notInRangeMessage = "Votre glycémie doit être entre 0.4 et 4 g/L",
+     * )
      */
     private $rate;
 
@@ -41,22 +49,43 @@ class Bloodsugar
     private $corrected;
 
     /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"apiv0"})
-     */
-    private $date;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"apiv0"})
-     */
-    private $time;
-
-    /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"apiv0"})
      */
     private $normality;
+
+    /**
+     * @ORM\Column(type="date")
+     * @Groups({"apiv0"})
+     * @Assert\LessThanOrEqual("today", message="La date de votre glycémie ne peut être dans le futur")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="time")
+     * @Groups({"apiv0"})
+     * @Assert\Time
+     * @var string A "H:i" formatted value
+     */
+    private $time;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $high;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $low;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"apiv0"})
+     */
+    private $normal;
 
     public function getId(): ?int
     {
@@ -111,30 +140,6 @@ class Bloodsugar
         return $this;
     }
 
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getTime(): ?string
-    {
-        return $this->time;
-    }
-
-    public function setTime(string $time): self
-    {
-        $this->time = $time;
-
-        return $this;
-    }
-
     public function getNormality(): ?string
     {
         return $this->normality;
@@ -143,6 +148,66 @@ class Bloodsugar
     public function setNormality(string $normality): self
     {
         $this->normality = $normality;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(\DateTimeInterface $time): self
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    public function getHigh(): ?bool
+    {
+        return $this->high;
+    }
+
+    public function setHigh(bool $high): self
+    {
+        $this->high = $high;
+
+        return $this;
+    }
+
+    public function getLow(): ?bool
+    {
+        return $this->low;
+    }
+
+    public function setLow(bool $low): self
+    {
+        $this->low = $low;
+
+        return $this;
+    }
+
+    public function getNormal(): ?bool
+    {
+        return $this->normal;
+    }
+
+    public function setNormal(bool $normal): self
+    {
+        $this->normal = $normal;
 
         return $this;
     }

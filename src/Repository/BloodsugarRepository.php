@@ -19,6 +19,26 @@ class BloodsugarRepository extends ServiceEntityRepository
         parent::__construct($registry, Bloodsugar::class);
     }
 
+    public function getAllBloodsugarsOrderByDateDes($userId)
+    {
+        // on appelle le querybuilder
+        $builder = $this->createQueryBuilder('bloodsugars');
+
+        // on prépare la requête
+        $builder->where('bloodsugars.user = :bloodsugarsUser');
+
+        // on récupère les produits du user passé en paramètre
+        $builder->setParameter('bloodsugarsUser', $userId);
+
+        // on ordonne la réponse de façon ascendante de date
+        $builder->orderBy('bloodsugars.date', 'DESC');
+
+        // doctrine envoie la requête à la bdd
+        $query = $builder->getQuery();
+        
+        // on retourne le résultat
+        return $query->getResult();
+    }
     // /**
     //  * @return Bloodsugar[] Returns an array of Bloodsugar objects
     //  */

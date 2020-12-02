@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Repository\BloodsugarRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -17,9 +18,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, BloodsugarRepository $bloodsugarRepository)
     {
         parent::__construct($registry, User::class);
+        $this->bloodsugarRepository = $bloodsugarRepository;
     }
 
     /**
@@ -47,6 +49,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $query->getOneOrNullResult();
     }
+    public function getAllBloodsugarsOrderByDateDes($userId){
+    
+        return $this->bloodsugarRepository->getAllBloodsugarsOrderByDateDes($userId);
+         
+         
+     }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Table(name="`user`")
@@ -27,6 +29,9 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"apiv0"})
+     * @Assert\Email(
+     *     message = "Le mail n'est pas valide"
+     * )
      */
     private $email;
 
@@ -50,24 +55,48 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"apiv0"})
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Votre nom de famille doit avoir au moins 2 caractères",
+     *      maxMessage = "Votre nom de famille doit avoir au maximum 50 caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=50)
      * @Groups({"apiv0"})
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Votre prénom doit avoir au moins 2 caractères",
+     *      maxMessage = "Votre prénom doit avoir au maximum 50 caractères",
+     *      allowEmptyString = false
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"apiv0"})
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 2,
+     *      notInRangeMessage = "Votre cible minimale doit être entre 0.6 et 2 g/L",
+     * )
      */
     private $target_min;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"apiv0"})
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 2,
+     *      notInRangeMessage = "Votre cible maximale doit être entre 1 et 2 g/L",
+     * )
      */
     private $target_max;
 
@@ -80,6 +109,9 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"apiv0"})
+     * @Assert\Email(
+     *     message = "Votre mail n'est pas valide"
+     * )
      */
     private $doctor_email;
 
@@ -97,6 +129,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=30)
      * @Groups({"apiv0"})
+     * @Assert\Choice({"Insulino-requiérent", "Non insulino-requiérent"},  message = "Veuillez vérifier le champs Traitement, seuls Insulino-requiérent ou Non insulino-requiérent sont acceptés")
      */
     private $treatment;
 
