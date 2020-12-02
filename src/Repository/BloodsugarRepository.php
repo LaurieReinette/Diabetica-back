@@ -19,7 +19,7 @@ class BloodsugarRepository extends ServiceEntityRepository
         parent::__construct($registry, Bloodsugar::class);
     }
 
-    public function getAllBloodsugarsOrderByDate($userId)
+    public function getAllBloodsugarsOrderByDateDes($userId)
     {
         // on appelle le querybuilder
         $builder = $this->createQueryBuilder('bloodsugars');
@@ -31,7 +31,7 @@ class BloodsugarRepository extends ServiceEntityRepository
         $builder->setParameter('bloodsugarsUser', $userId);
 
         // on ordonne la réponse de façon ascendante de date
-        $builder->orderBy('bloodsugars.date', 'ASC');
+        $builder->orderBy('bloodsugars.date', 'DESC');
 
         // doctrine envoie la requête à la bdd
         $query = $builder->getQuery();

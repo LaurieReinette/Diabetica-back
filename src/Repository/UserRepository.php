@@ -49,9 +49,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $query->getOneOrNullResult();
     }
-    public function getAllBloodsugarsOrderByDate($userId){
+    public function getAllBloodsugarsOrderByDateDes($userId){
     
-        return $this->bloodsugarRepository->getAllBloodsugarsOrderByDate($userId);
+        return $this->bloodsugarRepository->getAllBloodsugarsOrderByDateDes($userId);
          
          
      }

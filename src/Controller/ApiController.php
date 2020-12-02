@@ -159,7 +159,7 @@ class ApiController extends AbstractController
             return $this->json($error, $status = 404, $error, $context = []);
         }
  
-        return $this->json($userRepository->getAllBloodsugarsOrderByDate($user->getId()), 200, [], ['groups' => 'apiv0']);
+        return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
 
      /**
@@ -200,7 +200,7 @@ class ApiController extends AbstractController
 
         $em->flush();
 
-        return $this->json($userRepository->getAllBloodsugarsOrderByDate($user->getId()), 200, [], ['groups' => 'apiv0']);
+        return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
 
 }
