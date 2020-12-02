@@ -49,26 +49,25 @@ class Bloodsugar
     private $corrected;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=20)
+     * @Groups({"apiv0"})
+     */
+    private $normality;
+
+    /**
+     * @ORM\Column(type="date")
      * @Groups({"apiv0"})
      * @Assert\LessThanOrEqual("today", message="La date de votre glycémie ne peut être dans le futur")
-     * 
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="time")
      * @Groups({"apiv0"})
      * @Assert\Time
      * @var string A "H:i" formatted value
      */
     private $time;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"apiv0"})
-     */
-    private $normality;
 
     public function getId(): ?int
     {
@@ -123,30 +122,6 @@ class Bloodsugar
         return $this;
     }
 
-    public function getDate(): ?string
-    {
-        return $this->date;
-    }
-
-    public function setDate(string $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getTime(): ?string
-    {
-        return $this->time;
-    }
-
-    public function setTime(string $time): self
-    {
-        $this->time = $time;
-
-        return $this;
-    }
-
     public function getNormality(): ?string
     {
         return $this->normality;
@@ -155,6 +130,30 @@ class Bloodsugar
     public function setNormality(string $normality): self
     {
         $this->normality = $normality;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTime(): ?\DateTimeInterface
+    {
+        return $this->time;
+    }
+
+    public function setTime(\DateTimeInterface $time): self
+    {
+        $this->time = $time;
 
         return $this;
     }

@@ -82,7 +82,7 @@ class User implements UserInterface
      * @ORM\Column(type="float")
      * @Groups({"apiv0"})
      * @Assert\Range(
-     *      min = 0.6,
+     *      min = 1,
      *      max = 2,
      *      notInRangeMessage = "Votre cible minimale doit être entre 0.6 et 2 g/L",
      * )

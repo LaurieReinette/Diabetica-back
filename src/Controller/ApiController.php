@@ -147,15 +147,27 @@ class ApiController extends AbstractController
  
         return $this->json($user, 200, [], ['groups' => 'apiv0']);
     }
+    /**
+     * @Route("/user/fetch-bloodsugars", name="fetch_bloodsugars", methods="GET")
+     */
+    public function fetchBloosugars(UserRepository $userRepository)
+    {
+        $user = $this->getUser();
+
+        if ($user == null) {
+            $error = ["error" => "Utilisateur inconnu en base de données"];
+            return $this->json($error, $status = 404, $error, $context = []);
+        }
+ 
+        return $this->json($userRepository->getAllBloodsugarsOrderByDate($user->getId()), 200, [], ['groups' => 'apiv0']);
+    }
 
      /**
      * @Route("/user/bloodsugar/add", name="bloodsugar_add", methods="POST")
      */
-    public function userProductManualAdd( Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserRepository $userRepository, BloodsugarRepository $bloodsugarRepository)
+    public function userProductManualAdd( Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserRepository $userRepository)
     {
-        // on configure le local pour stocker plus tar les dates en français en string
-        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        // on récupèr ele user connecté
+        // on récupère le user connecté
         $user = $this->getUser();
 
         // si il n'y en a pas on renvoie l'information au front
@@ -165,6 +177,7 @@ class ApiController extends AbstractController
         }
         // on récupère le json reçu de la requête
         $jsonReceived = $request->getContent();
+
         $json = json_decode($jsonReceived);
 
         $newBloodsugar = $serializer->deserialize($jsonReceived, BloodSugar::class, 'json');
@@ -172,8 +185,6 @@ class ApiController extends AbstractController
         // on assigne à l'utilisateur
         $newBloodsugar->setUser($user);
         //on formate la date recu au format "Lundi 2 novembre 2020"
-
-        $newBloodsugar->setDate(strftime('%A %d %B %Y', strtotime($json->date)));
 
         if ($json->rate < $user->getTargetMin()){
             $newBloodsugar->setNormality("Hypoglycémie");
@@ -189,7 +200,7 @@ class ApiController extends AbstractController
 
         $em->flush();
 
-        return $this->json($user, 200, [], ['groups' => 'apiv0']);
+        return $this->json($userRepository->getAllBloodsugarsOrderByDate($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
 
 }
