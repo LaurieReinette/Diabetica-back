@@ -219,7 +219,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="bloosugar_edit", requirements={"id" = "\d+"}, methods="POST")
+     * @Route("/edit/{id}", name="bloodsugar_edit", requirements={"id" = "\d+"}, methods="POST")
      */
     public function editBloodsugar($id, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, BloodsugarRepository $bloodsugarRepository, UserRepository $userRepository)
     {
@@ -266,6 +266,28 @@ class ApiController extends AbstractController
         $bloodsugarFound->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
         $bloodsugarFound->setTimeString(strftime('%Hh%M', strtotime($json->time)));
 
+        $em->flush();
+
+        return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
+    }
+        /**
+     * @Route("/delete/{id}", name="bloosugar_delete", requirements={"id" = "\d+"}, methods="DELETE")
+     */
+    public function deleteBloodsugar($id, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, BloodsugarRepository $bloodsugarRepository, UserRepository $userRepository)
+    {
+        $user = $this->getUser();
+
+        $bloodsugarToDelete= $bloodsugarRepository->find($id);
+        
+        if ($bloodsugarToDelete == null) {
+            $error = ["error" => "La glycémie est inconnue en base de données"];
+            return $this->json($error, $status = 404, $error, $context = []);
+        }
+        
+        $jsonReceived = $request->getContent(); 
+        
+        $json = json_decode($jsonReceived);
+        $em->remove($bloodsugarToDelete);
         $em->flush();
 
         return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
