@@ -218,4 +218,57 @@ class ApiController extends AbstractController
         return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
 
+    /**
+     * @Route("/edit/{id}", name="bloosugar_edit", requirements={"id" = "\d+"}, methods="POST")
+     */
+    public function editBloodsugar($id, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, BloodsugarRepository $bloodsugarRepository, UserRepository $userRepository)
+    {
+        $user = $this->getUser();
+
+        $bloodsugarFound= $bloodsugarRepository->find($id);
+        
+        if ($bloodsugarFound == null) {
+            $error = ["error" => "La glycémie est inconnue en base de données"];
+            return $this->json($error, $status = 404, $error, $context = []);
+        }
+        
+        $jsonReceived = $request->getContent(); 
+        
+        $json = json_decode($jsonReceived);
+        $bloodsugarToEdit = $serializer->deserialize($jsonReceived, BloodSugar::class, 'json');
+
+        $bloodsugarFound->setCorrection($bloodsugarToEdit->getCorrection());
+        $bloodsugarFound->setDate($bloodsugarToEdit->getDate());
+        $bloodsugarFound->setTime($bloodsugarToEdit->getTime());
+        $bloodsugarFound->setRate($bloodsugarToEdit->getRate());
+
+        if ($json->rate < $user->getTargetMin()){
+            $bloodsugarFound->setNormality("Hypoglycémie");
+            $bloodsugarFound->setLow(true);
+            $bloodsugarFound->setHigh(false);
+            $bloodsugarFound->setNormal(false);
+
+        }
+        elseif (($json->rate >= $user->getTargetMin()) && ($json->rate <= $user->getTargetMax())) {
+            $bloodsugarFound->setNormality("Dans la cible");
+            $bloodsugarFound->setNormal(true);
+            $bloodsugarFound->setHigh(false);
+            $bloodsugarFound->setLow(false);
+            
+        }
+        else {
+            $bloodsugarFound->setNormality("Hyperglycémie");
+            $bloodsugarFound->setHigh(true);
+            $bloodsugarFound->setLow(false);
+            $bloodsugarFound->setNormal(false);
+        }
+        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
+        $bloodsugarFound->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
+        $bloodsugarFound->setTimeString(strftime('%Hh%M', strtotime($json->time)));
+
+        $em->flush();
+
+        return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
+    }
+
 }
