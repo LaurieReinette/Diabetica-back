@@ -208,9 +208,11 @@ class ApiController extends AbstractController
             $newBloodsugar->setNormal(false);
         }
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        $newBloodsugar->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
-        $newBloodsugar->setTimeString(strftime('%Hh%M', strtotime($json->time)));
-        
+        $newBloodsugar->setDateSentence(strftime('%a%e %b %Y', strtotime($json->date)));
+        $newBloodsugar->setTimeSentence(strftime('%Hh%M', strtotime($json->time)));
+        $newBloodsugar->setDateString(strftime('%Y-%m-%d', strtotime($json->date)));
+        $newBloodsugar->setTimeString(strftime('%H:%M', strtotime($json->time)));
+
         $em->persist($newBloodsugar);
 
         $em->flush();
@@ -219,7 +221,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="bloodsugar_edit", requirements={"id" = "\d+"}, methods="POST")
+     * @Route("/bloodsugar/edit/{id}", name="bloodsugar_edit", requirements={"id" = "\d+"}, methods="POST")
      */
     public function editBloodsugar($id, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, BloodsugarRepository $bloodsugarRepository, UserRepository $userRepository)
     {
@@ -262,16 +264,19 @@ class ApiController extends AbstractController
             $bloodsugarFound->setLow(false);
             $bloodsugarFound->setNormal(false);
         }
+        
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        $bloodsugarFound->setDateString(strftime('%a%e %b %Y', strtotime($json->date)));
-        $bloodsugarFound->setTimeString(strftime('%Hh%M', strtotime($json->time)));
+        $bloodsugarFound->setDateSentence(strftime('%a%e %b %Y', strtotime($json->date)));
+        $bloodsugarFound->setTimeSentence(strftime('%Hh%M', strtotime($json->time)));
+        $bloodsugarFound->setDateString(strftime('%Y-%m-%d', strtotime($json->date)));
+        $bloodsugarFound->setTimeString(strftime('%H:%M', strtotime($json->time)));
 
         $em->flush();
 
         return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
-        /**
-     * @Route("/delete/{id}", name="bloosugar_delete", requirements={"id" = "\d+"}, methods="DELETE")
+    /**
+     * @Route("/bloodsugar/delete/{id}", name="bloosugar_delete", requirements={"id" = "\d+"}, methods="DELETE")
      */
     public function deleteBloodsugar($id, Request $request, SerializerInterface $serializer, EntityManagerInterface $em, BloodsugarRepository $bloodsugarRepository, UserRepository $userRepository)
     {
