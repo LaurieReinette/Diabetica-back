@@ -99,6 +99,18 @@ class Bloodsugar
      */
     private $timeString;
 
+    /**
+     * @ORM\Column(type="string", length=30)
+     * @Groups({"apiv0"})
+     */
+    private $dateSentence;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     * @Groups({"apiv0"})
+     */
+    private $timeSentence;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -244,6 +256,30 @@ class Bloodsugar
     public function setTimeString(string $timeString): self
     {
         $this->timeString = $timeString;
+
+        return $this;
+    }
+
+    public function getDateSentence(): ?string
+    {
+        return $this->dateSentence;
+    }
+
+    public function setDateSentence(string $dateSentence): self
+    {
+        $this->dateSentence = $dateSentence;
+
+        return $this;
+    }
+
+    public function getTimeSentence(): ?string
+    {
+        return $this->timeSentence;
+    }
+
+    public function setTimeSentence(string $timeSentence): self
+    {
+        $this->timeSentence = $timeSentence;
 
         return $this;
     }
