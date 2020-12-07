@@ -308,7 +308,7 @@ class ApiController extends AbstractController
         
         $message = (new \Swift_Message('Les glycémies de votre patient '. $user->getFirstname() . ' ' . $user->getLastname()))
         ->setFrom('contact@diabetica.lauriereinette.fr')
-        ->setTo($user->getDoctorEmail())
+        ->setTo('laurie97275@hotmail.fr')
         ->setBody(
             $this->renderView(
                 // templates/emails/registration.html.twig

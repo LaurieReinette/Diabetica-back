@@ -1,44 +1,64 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-  <h4>Bonjour Docteur {{ user.doctorName }}</h4>
+<style type="text/css">
+h5 {
+  color: #FF3B52;
+}
+table, th, td {
+  border: 1px solid lightgrey;
+  text-align: center;
+}
+{# .mail {
+  background-color: #6DCDFE;
+} #}
 
-  <h5>
-    Diabetica - Gestion facile de votre diabète
-  </h5>
-
-  <p>
-    Voici les résultats de votre patient: <b>{{ user.firstName }} {{ user.lastName}}</b>
-  </p>
-  <p>
-    Pour rappel:
-    <ul>
-    <li>Cible minimale: {{ user.targetMin }}</li>
-    <li>Cible maximale: {{ user.targetMax }}</li>
-    </ul>
-  </p>
-
-  <table>
-          <thead>
-            <tr>
-              <td>Date</td>
-              <td>Heure</td>
-              <td>Taux (g/L)</td>
-              <td>Correction</td>
-            </tr>
-          </thead>
-          <tbody>
-            {% for bloodsugar in bloodsugars %}
-              <tr>
-                <td>{{ bloodsugar.dateSentence }}</td>
-                <td>{{ bloodsugar.timeSentence }}</td>
-                <td>{{ bloodsugar.rate }}</td>
-                <td>{{ bloodsugar.correction }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+</style>
+  <style media="all and (max-width: 500px)">
+    .hour{
+  width: 20%
+}
+  </style> 
+  <div class="mail">
+    <h4>Bonjour Docteur {{ user.doctorName }}</h4>
   
+    <h5>
+      Diabetica - Gestion facile de votre diabète
+    </h5>
+  
+    <p>
+      Voici les résultats de votre patient: <b>{{ user.firstName }} {{ user.lastName}}</b>
+    </p>
+    <p>
+      Pour rappel:
+      <ul>
+      <li>Cible minimale: {{ user.targetMin }} g/L</li>
+      <li>Cible maximale: {{ user.targetMax }} g/L</li>
+      </ul>
+    </p>
+  
+    <table>
+            <thead>
+              <tr>
+                <td>Date</td>
+                <td class="hour">Heure</td>
+                <td>Taux (g/L)</td>
+                <td>Correction</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bloodsugar in bloodsugars %}
+                <tr>
+                  <td>{{ bloodsugar.dateSentence }}</td>
+                  <td>{{ bloodsugar.timeSentence }}</td>
+                  <td>{{ bloodsugar.rate }}</td>
+                  <td>{{ bloodsugar.correction }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    
+  </div>
 
 {% endblock %}
 
