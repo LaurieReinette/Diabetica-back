@@ -298,4 +298,33 @@ class ApiController extends AbstractController
         return $this->json($userRepository->getAllBloodsugarsOrderByDateDes($user->getId()), 200, [], ['groups' => 'apiv0']);
     }
 
+    /**
+     * @Route("/bloodsugar/sendtodoctor", name="bloosugars_send", methods="GET")
+     */
+    public function sendBloodSugars(Request $request, UserRepository $userRepository, \Swift_Mailer $mailer)
+    {
+        $user = $this->getUser();
+        $bloodsugars= $userRepository->getAllBloodsugarsOrderByDateDes($user->getId());
+        
+        $message = (new \Swift_Message('Les glycémies de votre patient '. $user->getFirstname() . ' ' . $user->getLastname()))
+        ->setFrom('contact@diabetica.lauriereinette.fr')
+        ->setTo('laurie97275@hotmail.fr')
+        ->setBody(
+            $this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/sendBloodsugars.html.twig',
+                [
+                    'bloodsugars' => $bloodsugars,
+                    'user' => $user,
+                ]
+            ),
+            'text/html'
+        )
+    ;
+
+        $mailer->send($message);
+     
+            
+        return $this->json([], 200, [], ['groups' => 'apiv0']);
+    }
 }
